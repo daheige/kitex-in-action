@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package helloworld;
+
+// 这里的pb前面的路径可以忽略，或者可以将生成的代码放在制定的git仓库中
+option go_package="pb/";
+
+service Greeter {
+  rpc Hello (HelloRequest) returns (HelloReply) {}
+}
+
+message HelloRequest {
+  string msg = 1;
+}
+
+message HelloReply {
+  int64 id = 1;
+  string msg = 2;
+}

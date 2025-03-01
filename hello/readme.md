@@ -1,0 +1,126 @@
+# kitex实战
+参考文档：https://www.cloudwego.io/zh/docs/kitex/
+
+# 代码生成之前的准备工作
+1. 首先需要安装好protoc工具
+mac系统安装方式如下：
+```shell
+brew install protobuf
+```
+linux系统安装方式如下：
+```shell
+# Reference: https://grpc.io/docs/protoc-installation/
+PB_REL="https://github.com/protocolbuffers/protobuf/releases"
+curl -LO $PB_REL/download/v3.15.8/protoc-3.15.8-linux-x86_64.zip
+unzip -o protoc-3.15.8-linux-x86_64.zip -d $HOME/.local
+export PATH=~/.local/bin:$PATH # Add this to your `~/.bashrc`.
+protoc --version
+libprotoc 3.15.8
+```
+
+2. 安装grpc相关的go工具链
+参考链接： https://www.cloudwego.io/zh/docs/kitex/tutorials/code-gen/code_generation/
+```shell
+go install github.com/cloudwego/kitex/tool/cmd/kitex@latest
+# https://github.com/cloudwego/protoc-gen-validator
+go install github.com/cloudwego/protoc-gen-validator@latest
+
+# Reference: https://grpc.io/docs/languages/go/quickstart/
+go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+```
+
+# 根据proto文件生成脚手架layout
+1. 定义好proto文件，参考 `helloworld.proto` 文件
+2. 通过kitex工具生成脚手架代码
+```shell
+# 创建项目目录
+mkdir hello
+# 仅仅是生成脚手架代码，这里的-module参数是项目的目录名字
+kitex -service greeter -module hello helloworld.proto
+```
+
+3. 获取相关的go代码包
+```shell
+go mod tidy
+```
+此时代码生成的结构如下所示：
+```
+├── build.sh
+├── client
+│   └── main.go
+├── go.mod
+├── go.sum
+├── handler.go
+├── helloworld.proto
+├── kitex_gen # kitex脚手架生成的代码目录
+│   └── pb
+├── kitex_info.yaml
+├── main.go
+├── output
+│   ├── bin
+│   ├── bootstrap.sh
+│   └── log
+├── readme.md
+└── script
+    ├── bootstrap.sh
+```
+
+# 运行项目
+1. 编译构建应用程序
+```shell
+sh build.sh
+```
+此时就会在当前项目下生成一个output目录，包含bin/greeter二进制文件。这个output目录中的bootstrap.sh文件，可以快速在本地启动项目。
+2. 本地运行etcd服务(这里使用的服务发现和注册是etcd，当然你可以根据实际情况选择不同的组件)
+```shell
+sh start-etcd.sh
+```
+3. 启动服务
+```shell
+sh output/bootstrap.sh
+```
+服务启动后效果如下：
+```
+2025/03/01 21:50:15.363992 server.go:79: [Info] KITEX: server listen at addr=[::]:8890
+2025/03/01 21:50:16.369342 etcd_registry.go:299: [Info] start keepalive lease 694d9551e212d53e for etcd registry
+```
+
+# proto文件发生变化后的代码生成
+```shell
+# 当proto文件发生更改，执行该命令，并实现对应的service方法即可
+kitex -module hello helloworld.proto
+```
+
+# 客户端运行验证
+执行 go run client/main.go 命令，结果如下：
+```shell
+2025/03/01 22:16:47 hello,my request
+2025/03/01 22:16:48 hello,my request
+2025/03/01 22:16:49 hello,my request
+2025/03/01 22:16:50 hello,my request
+```
+
+# 日志接入
+https://www.cloudwego.io/zh/docs/kitex/tutorials/observability/logging/
+```go
+// 日志输出采用zap框架实现日志json格式输出
+klog.SetLogger(kitexzap.NewLogger())
+klog.SetLevel(klog.LevelDebug)
+
+// 可以根据实际情况将日志输出到文件中
+f, err := os.OpenFile("./output.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+if err != nil {
+    log.Fatal("open output file err:", err)
+}
+defer f.Close()
+klog.SetOutput(f) // 将日式重定向到文件
+```
+
+# 服务发现和注册参考
+https://www.cloudwego.io/zh/docs/kitex/tutorials/third-party/service_discovery/etcd/
+
+# 服务可观测性
+https://www.cloudwego.io/zh/docs/kitex/tutorials/third-party/observability/
+
+# HTTP接入
+https://www.cloudwego.io/zh/docs/kitex/getting-started/tutorial/#%E6%9A%B4%E9%9C%B2-http-%E6%8E%A5%E5%8F%A3
