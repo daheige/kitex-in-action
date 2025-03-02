@@ -149,3 +149,4 @@ https://www.cloudwego.io/zh/docs/kitex/tutorials/third-party/observability/
 
 # HTTP接入
 https://www.cloudwego.io/zh/docs/kitex/getting-started/tutorial/#%E6%9A%B4%E9%9C%B2-http-%E6%8E%A5%E5%8F%A3
+当然也可以使用grpc gateway实现grpc http proxy，具体实现参考：feat/daheige/gateway分支
