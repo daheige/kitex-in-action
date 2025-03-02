@@ -114,6 +114,17 @@ kitex/registry-etcd/services.greeter/192.168.10.101:8890
 {"network":"tcp","address":"192.168.10.101:8890","weight":10,"tags":null}
 ```
 
+# 通过命令行工具请求grpc服务
+1. 安装kitexcall工具
+```shell
+go install github.com/kitex-contrib/kitexcall@latest
+```
+2. 通过kitexcall请求数据
+```shell
+# -idl-path 用于指定proto文件 -m用于指定serviceName/method -d请求数据可以使用json格式 -e用于指定服务地址
+kitexcall -idl-path helloworld.proto -m Greeter/Hello -d '{"msg": "kitex"}' -e 127.0.0.1:8890
+```
+
 # 日志接入
 https://www.cloudwego.io/zh/docs/kitex/tutorials/observability/logging/
 ```go

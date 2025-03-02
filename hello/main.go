@@ -17,7 +17,8 @@ import (
 func main() {
 	// 日志输出采用zap框架实现日志json格式输出
 	klog.SetLogger(kitexzap.NewLogger())
-	klog.SetLevel(klog.LevelDebug)
+	//klog.SetLevel(klog.LevelDebug)
+	klog.SetLevel(klog.LevelInfo)
 
 	// 可以根据实际情况将日志输出到文件中
 	//f, err := os.OpenFile("./output.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
