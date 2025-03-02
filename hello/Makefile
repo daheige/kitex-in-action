@@ -12,4 +12,10 @@ start-etcd:
 enter-etcd:
 	docker exec -it etcd_test /bin/bash
 
-.PHONY: gen-layout gen-pb
+build:
+	sh build.sh
+
+run:
+	sh output/bootstrap.sh
+
+.PHONY: gen-layout gen-pb build

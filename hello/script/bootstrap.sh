@@ -18,5 +18,12 @@ if [ ! -d "$KITEX_LOG_DIR/rpc" ]; then
     mkdir -p "$KITEX_LOG_DIR/rpc"
 fi
 
-exec "$CURDIR/bin/greeter"
+# Fix process startup port conflict issue, requiring stopping old services.
+pid=`ps aux | grep hello/output/bin/greeter | grep -v grep | awk '{print $2}'`
+if [ ${#pid} -gt 0 ]; then
+    echo "old service pid"$pid
+    kill -9 $pid
+fi
 
+echo "service begin..."
+exec "$CURDIR/bin/greeter"

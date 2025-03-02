@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net"
+	"os"
 
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
@@ -18,6 +20,9 @@ import (
 )
 
 func main() {
+	pid := os.Getpid()
+	fmt.Printf("current service pid: %d\n", pid)
+
 	// 日志输出采用zap框架实现日志json格式输出
 	klog.SetLogger(kitexzap.NewLogger())
 	//klog.SetLevel(klog.LevelDebug)
