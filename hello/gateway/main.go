@@ -109,21 +109,9 @@ func main() {
 }
 
 func initRouter(router *gin.Engine, mux *runtime.ServeMux) {
-	// 访问日志中间件处理
-	//logWare := &middleware.LogWare{}
-	//
-	//// 对所有的请求进行性能监控，一般来说生产环境，可以对指定的接口做性能监控
-	//router.Use(logWare.Access(), logWare.Recover(), middleware.TimeoutHandler(10*time.Second))
-	//
-	//// gin 框架prometheus接入
-	//router.Use(middleware.WrapMonitor())
-	//
-	//// 路由找不到的情况
-	//router.NoRoute(middleware.NotFoundHandler())
-
 	// gateway http proxy
 	// 这里将proto文件中的路由地址进行路由注册
-	// 访问方式：http://localhost:8091/v1/say/1
+	// 访问方式：localhost:8091/v1/hello/daheige
 	router.Any("/v1/*any", gin.WrapH(mux))
 
 	// 添加自定义路由地址
