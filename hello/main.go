@@ -12,6 +12,9 @@ import (
 	kitexzap "github.com/kitex-contrib/obs-opentelemetry/logging/zap"
 
 	pb "hello/kitex_gen/pb/greeter"
+
+	kServer "github.com/cloudwego/kitex/server"
+	"github.com/kitex-contrib/monitor-prometheus"
 )
 
 func main() {
@@ -47,6 +50,8 @@ func main() {
 				ServiceName: "services.greeter",
 			},
 		),
+		// prometheus接入
+		kServer.WithTracer(prometheus.NewServerTracer(":9093", "/metrics")),
 	)
 
 	// 启动服务
