@@ -3,11 +3,11 @@
 
 # 代码生成之前的准备工作
 1. 首先需要安装好protoc工具
-mac系统安装方式如下：
+- mac系统安装方式如下：
 ```shell
 brew install protobuf
 ```
-linux系统安装方式如下：
+- linux系统安装方式如下：
 ```shell
 # Reference: https://grpc.io/docs/protoc-installation/
 PB_REL="https://github.com/protocolbuffers/protobuf/releases"
@@ -19,6 +19,7 @@ libprotoc 3.15.8
 ```
 
 2. 安装grpc相关的go工具链
+
 参考链接： https://www.cloudwego.io/zh/docs/kitex/tutorials/code-gen/code_generation/
 ```shell
 go install github.com/cloudwego/kitex/tool/cmd/kitex@latest
@@ -71,10 +72,12 @@ go mod tidy
 sh build.sh
 ```
 此时就会在当前项目下生成一个output目录，包含bin/greeter二进制文件。这个output目录中的bootstrap.sh文件，可以快速在本地启动项目。
+
 2. 本地运行etcd服务(这里使用的服务发现和注册是etcd，当然你可以根据实际情况选择不同的组件)
 ```shell
 sh start-etcd.sh
 ```
+
 3. 启动服务
 ```shell
 sh output/bootstrap.sh
@@ -100,6 +103,17 @@ kitex -module hello helloworld.proto
 2025/03/01 22:16:50 hello,my request
 ```
 
+# 通过etcd查看注册的服务
+```shell
+docker exec -it etcd_test /bin/bash
+etcdctl get kitex/registry-etcd --prefix
+```
+输出结果如下：
+```
+kitex/registry-etcd/services.greeter/192.168.10.101:8890
+{"network":"tcp","address":"192.168.10.101:8890","weight":10,"tags":null}
+```
+
 # 日志接入
 https://www.cloudwego.io/zh/docs/kitex/tutorials/observability/logging/
 ```go
@@ -110,7 +124,7 @@ klog.SetLevel(klog.LevelDebug)
 // 可以根据实际情况将日志输出到文件中
 f, err := os.OpenFile("./output.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 if err != nil {
-    log.Fatal("open output file err:", err)
+log.Fatal("open output file err:", err)
 }
 defer f.Close()
 klog.SetOutput(f) // 将日式重定向到文件
