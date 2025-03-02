@@ -5,6 +5,7 @@ package pb
 import (
 	fmt "fmt"
 	fastpb "github.com/cloudwego/fastpb"
+	annotations "google.golang.org/genproto/googleapis/api/annotations"
 )
 
 var (
@@ -162,3 +163,5 @@ var fieldIDToName_HelloReply = map[int32]string{
 	1: "Id",
 	2: "Msg",
 }
+
+var _ = annotations.File_google_api_annotations_proto

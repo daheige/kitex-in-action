@@ -31,13 +31,13 @@ go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 ```
 
 # 根据proto文件生成脚手架layout
-1. 定义好proto文件，参考 `helloworld.proto` 文件
+1. 定义好proto文件，参考 `idl/helloworld.proto` 文件
 2. 通过kitex工具生成脚手架代码
 ```shell
 # 创建项目目录
-mkdir hello
+mkdir -p hello/idl
 # 仅仅是生成脚手架代码，这里的-module参数是项目的目录名字
-kitex -service greeter -module hello helloworld.proto
+kitex -service greeter -module hello -I idl idl/helloworld.proto
 ```
 
 3. 获取相关的go代码包
@@ -52,7 +52,7 @@ go mod tidy
 ├── go.mod
 ├── go.sum
 ├── handler.go
-├── helloworld.proto
+├── idl
 ├── kitex_gen # kitex脚手架生成的代码目录
 │   └── pb
 ├── kitex_info.yaml
@@ -91,7 +91,7 @@ sh output/bootstrap.sh
 # proto文件发生变化后的代码生成
 ```shell
 # 当proto文件发生更改，执行该命令，并实现对应的service方法即可
-kitex -module hello helloworld.proto
+kitex -module hello -I idl idl/helloworld.proto
 ```
 
 # 客户端运行验证
@@ -122,7 +122,7 @@ go install github.com/kitex-contrib/kitexcall@latest
 2. 通过kitexcall请求数据
 ```shell
 # -idl-path 用于指定proto文件 -m用于指定serviceName/method -d请求数据可以使用json格式 -e用于指定服务地址
-kitexcall -idl-path helloworld.proto -m Greeter/Hello -d '{"msg": "kitex"}' -e 127.0.0.1:8890
+kitexcall -idl-path idl/helloworld.proto -m Greeter/Hello -d '{"msg": "kitex"}' -e 127.0.0.1:8890
 ```
 
 # 日志接入
