@@ -15,7 +15,8 @@ enter-etcd:
 build:
 	sh build.sh
 
-run:
+# 先构建，再运行
+run: build
 	sh output/bootstrap.sh
 
 .PHONY: gen-layout gen-pb build

@@ -14,7 +14,7 @@ docker run -d \
   quay.io/coreos/etcd:v3.5.1 \
   /usr/local/bin/etcd \
   --data-dir /etcd-data \
-  --advertise-client-urls http://localhost:2379 \
+  --advertise-client-urls http://0.0.0.0:2379 \
   --listen-client-urls http://0.0.0.0:2379
 
 echo "local etcd container run success!"
