@@ -17,6 +17,8 @@ RUN go mod download && go mod verify
 RUN cd /app/cmd/rpc && go build -ldflags="-s -w" -o kitex-rpc
 
 # 将上面构建好的二进制文件复制到容器中运行
+# bullseye-slim是固定版本的Debian 11的精简镜像
+# debian 11.x (bullseye)
 FROM debian:bullseye-slim
 
 # 设置时区和lang
@@ -31,6 +33,7 @@ EXPOSE 8890
 RUN echo "deb http://mirrors.aliyun.com/debian bullseye main" > /etc/apt/sources.list &&  \
     echo "deb http://mirrors.aliyun.com/debian-security bullseye-security main" >> /etc/apt/sources.list &&  \
     echo "deb http://mirrors.aliyun.com/debian bullseye-updates main" >> /etc/apt/sources.list &&  \
+    echo "deb https://mirrors.aliyun.com/debian/ bullseye-backports main" >> /etc/apt/sources.list &&  \
     apt-get update && apt-get install -y ca-certificates vim bash curl net-tools netbase wget \
     apt-transport-https && update-ca-certificates && apt-get clean &&  \
     rm -rf /var/lib/apt/lists && apt-get autoremove -y && apt-get autoclean -y
