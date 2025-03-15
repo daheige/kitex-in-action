@@ -33,7 +33,7 @@ RUN echo "deb http://mirrors.aliyun.com/debian bullseye main" > /etc/apt/sources
     echo "deb http://mirrors.aliyun.com/debian bullseye-updates main" >> /etc/apt/sources.list &&  \
     apt-get update && apt-get install -y ca-certificates vim bash curl net-tools wget \
     apt-transport-https && update-ca-certificates && apt-get clean &&  \
-    rm -rf /var/lib/apt/lists/* && mkdir -p /app/config
+    rm -rf /var/lib/apt/lists/*
 
 # 将构建阶段的二进制文件复制到工作目录中
 COPY --from=builder /app/cmd/rpc/kitex-rpc /app/kitex-rpc
