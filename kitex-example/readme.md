@@ -3,10 +3,10 @@
 1. 环境准备参考[kitex-in-action/readme.md](../readme.md)
 2. 新建kitex-example目录和kitex-example/bin目录
 3. 在kitex-example/bin目录中，添加如下文件
-- [gen-layout.sh](gen-layout.sh)
-- [gen-pb.sh](gen-pb.sh)
-- [greeter_impl.tpl](greeter_impl.tpl)
-- [main_code.tpl](main_code.tpl)
+- [gen-layout.sh](bin/gen-layout.sh)
+- [gen-pb.sh](bin/gen-pb.sh)
+- [greeter_impl.tpl](bin/greeter_impl.tpl)
+- [main_code.tpl](bin/main_code.tpl)
 4. 新建kitex-example/idl目录，并在该目录中添加如下proto文件
 ```protobuf
 syntax = "proto3";
