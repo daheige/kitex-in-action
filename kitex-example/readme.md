@@ -14,7 +14,7 @@ syntax = "proto3";
 package helloworld;
 
 // 这里的pb前面的路径可以忽略，或者可以将生成的代码放在制定的git仓库中
-// 这个路径是一个相对路径直接写pb/就可以
+// 这个路径是一个相对路径，直接写pb/就可以
 option go_package="pb/";
 
 service Greeter {
