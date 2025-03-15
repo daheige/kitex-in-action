@@ -8,15 +8,13 @@ import (
 
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
-	"github.com/cloudwego/kitex/server"
 	etcd "github.com/kitex-contrib/registry-etcd"
-
-	kitexzap "github.com/kitex-contrib/obs-opentelemetry/logging/zap"
-
-	pb "hello/kitex_gen/pb/greeter"
 
 	kServer "github.com/cloudwego/kitex/server"
 	"github.com/kitex-contrib/monitor-prometheus"
+	kitexzap "github.com/kitex-contrib/obs-opentelemetry/logging/zap"
+
+	pb "hello/kitex_gen/pb/greeter"
 )
 
 func main() {
@@ -47,10 +45,10 @@ func main() {
 	// 服务运行地址
 	addr, _ := net.ResolveTCPAddr("tcp", "0.0.0.0:8890")
 	svr := pb.NewServer(new(GreeterImpl),
-		server.WithServiceAddr(addr),
+		kServer.WithServiceAddr(addr),
 		// 指定 Registry 与服务基本信息
-		server.WithRegistry(r),
-		server.WithServerBasicInfo(
+		kServer.WithRegistry(r),
+		kServer.WithServerBasicInfo(
 			&rpcinfo.EndpointBasicInfo{
 				ServiceName: "services.greeter",
 			},

@@ -2,33 +2,7 @@
 参考文档：https://www.cloudwego.io/zh/docs/kitex/
 
 # 代码生成之前的准备工作
-1. 首先需要安装好protoc工具
-- mac系统安装方式如下：
-```shell
-brew install protobuf
-```
-- linux系统安装方式如下：
-```shell
-# Reference: https://grpc.io/docs/protoc-installation/
-PB_REL="https://github.com/protocolbuffers/protobuf/releases"
-curl -LO $PB_REL/download/v3.15.8/protoc-3.15.8-linux-x86_64.zip
-unzip -o protoc-3.15.8-linux-x86_64.zip -d $HOME/.local
-export PATH=~/.local/bin:$PATH # Add this to your `~/.bashrc`.
-protoc --version
-libprotoc 3.15.8
-```
-
-2. 安装grpc相关的go工具链
-
-参考链接： https://www.cloudwego.io/zh/docs/kitex/tutorials/code-gen/code_generation/
-```shell
-go install github.com/cloudwego/kitex/tool/cmd/kitex@latest
-# https://github.com/cloudwego/protoc-gen-validator
-go install github.com/cloudwego/protoc-gen-validator@latest
-
-# Reference: https://grpc.io/docs/languages/go/quickstart/
-go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
-```
+参考[kitex-in-action/readme.md](../readme.md)
 
 # 根据proto文件生成脚手架layout
 1. 定义好proto文件，参考 `idl/helloworld.proto` 文件
