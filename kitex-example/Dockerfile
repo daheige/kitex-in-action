@@ -1,4 +1,4 @@
-FROM golang:1.22.12-bullseye as builder
+FROM golang:1.22.12-bullseye AS builder
 LABEL authors="daheige"
 
 # 设置环境变量
@@ -31,9 +31,9 @@ EXPOSE 8890
 RUN echo "deb http://mirrors.aliyun.com/debian bullseye main" > /etc/apt/sources.list &&  \
     echo "deb http://mirrors.aliyun.com/debian-security bullseye-security main" >> /etc/apt/sources.list &&  \
     echo "deb http://mirrors.aliyun.com/debian bullseye-updates main" >> /etc/apt/sources.list &&  \
-    apt-get update && apt-get install -y ca-certificates vim bash curl net-tools wget \
+    apt-get update && apt-get install -y ca-certificates vim bash curl net-tools netbase wget \
     apt-transport-https && update-ca-certificates && apt-get clean &&  \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists && apt-get autoremove -y && apt-get autoclean -y
 
 # 将构建阶段的二进制文件复制到工作目录中
 COPY --from=builder /app/cmd/rpc/kitex-rpc /app/kitex-rpc
