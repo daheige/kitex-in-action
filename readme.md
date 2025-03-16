@@ -5,7 +5,7 @@
 
 # 环境准备
 1. 安装go
-进入官方网站，根据系统安装不同的go版本，这里推荐在linux或mac系统go
+进入https://go.dev/dl/官方网站，根据系统安装不同的go版本，这里推荐在linux或mac系统go
 2. 设置GOPROXY
 ```shell
 go env -w GOPROXY=https://goproxy.cn,direct
