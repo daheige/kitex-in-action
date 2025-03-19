@@ -1,11 +1,11 @@
 # kitex-in-action
     kitex实战项目开发
 # kitex参考文档
-    https://www.cloudwego.io/zh/docs/kitex/
+https://www.cloudwego.io/zh/docs/kitex/
 
 # 环境准备
 1. 安装go
-进入https://go.dev/dl/官方网站，根据系统安装不同的go版本，这里推荐在linux或mac系统go
+进入 https://go.dev/dl/ 官方网站，根据系统安装不同的go版本，这里推荐在linux或mac系统go
 2. 设置GOPROXY
 ```shell
 go env -w GOPROXY=https://goproxy.cn,direct
