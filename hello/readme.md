@@ -102,6 +102,13 @@ kitexcall -idl-path idl/helloworld.proto -m Greeter/Hello -d '{"msg": "kitex"}' 
 # 日志接入
 https://www.cloudwego.io/zh/docs/kitex/tutorials/observability/logging/
 ```go
+// 在项目中通过import引入klog包
+import (
+    "github.com/cloudwego/kitex/pkg/klog"
+    kitexzap "github.com/kitex-contrib/obs-opentelemetry/logging/zap"
+)
+
+// 接着在代码中设置日志级别
 // 日志输出采用zap框架实现日志json格式输出
 klog.SetLogger(kitexzap.NewLogger())
 klog.SetLevel(klog.LevelDebug)
@@ -109,10 +116,37 @@ klog.SetLevel(klog.LevelDebug)
 // 可以根据实际情况将日志输出到文件中
 f, err := os.OpenFile("./output.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 if err != nil {
-log.Fatal("open output file err:", err)
+    log.Fatal("open output file err:", err)
 }
 defer f.Close()
 klog.SetOutput(f) // 将日式重定向到文件
+```
+日志zap定制化配置
+```go
+	// 日志输出采用zap框架实现日志json格式输出
+	// encoder config
+	encoderConf := zapcore.EncoderConfig{
+		TimeKey:        "time_local", // 本地时间字段
+		LevelKey:       "level",
+		MessageKey:     "msg",
+		CallerKey:      "caller_line",
+		LineEnding:     zapcore.DefaultLineEnding,
+		EncodeTime:     zapcore.ISO8601TimeEncoder, // ISO8601 UTC 时间格式
+		EncodeDuration: zapcore.SecondsDurationEncoder,
+		EncodeCaller:   zapcore.FullCallerEncoder, // 全路径编码器
+		EncodeName:     zapcore.FullNameEncoder,
+		EncodeLevel:    zapcore.LowercaseLevelEncoder, // 小写编码器
+	}
+
+	klog.SetLogger(kitexzap.NewLogger(
+		kitexzap.WithZapOptions(
+			zap.AddCaller(), // 配置日式输出行号
+			zap.AddCallerSkip(3),
+		),
+		kitexzap.WithCoreEnc(zapcore.NewJSONEncoder(encoderConf)),
+	))
+
+	klog.SetLevel(klog.LevelDebug)
 ```
 
 # 服务发现和注册参考

@@ -1,0 +1,2 @@
+{"level":"info","time_local":"2025-03-23T23:25:08.158+0800","msg":"hello world","foo":"bar","local_time":"2025-03-23 23:25:08.158","hostname":"monitordeMBP.lan","x-request-id":"41a1ce58b3e1a47ef61337040044d86d"}
+{"level":"info","time_local":"2025-03-23T23:25:31.427+0800","msg":"hello world","foo":"bar","local_time":"2025-03-23 23:25:31.427","hostname":"monitordeMBP.lan","x-request-id":"aa9f1ac885f58c3ae58c4d9c95e29073"}
