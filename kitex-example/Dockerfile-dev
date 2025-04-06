@@ -1,0 +1,26 @@
+FROM golang:1.22.12-alpine AS builder
+LABEL author="daheige"
+
+# 设置环境变量
+ENV TZ=Asia/Shanghai LANG="zh_CN.UTF-8"
+
+# 配置环境变量（禁用 CGO、启用模块、设置代理）
+ENV CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GOPROXY=https://goproxy.cn,direct
+
+WORKDIR /app
+
+# 安装相关依赖
+# 解决http x509证书问题，需要安装证书
+# libc6-compat 安装DNS解析相关依赖（可选）
+RUN echo "export LC_ALL=${LANG}"  >>  /etc/profile  \
+    && apk update && apk upgrade  \
+    && apk --no-cache add protobuf-dev protobuf gcompat iputils net-tools  \
+    tzdata ca-certificates bash vim bash-completion curl nodejs npm wget \
+    && cp /usr/share/zoneinfo/${TZ} /etc/localtime  \
+    && echo $TZ > /etc/timezone && apk del tzdata  \
+    && rm -rf /var/cache/apk/* /tmp/* /var/tmp/* $HOME/.cache  \
+    && go install github.com/cloudwego/kitex/tool/cmd/kitex@latest  \
+    && go install github.com/cloudwego/protoc-gen-validator@latest  \
+    && go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+
+CMD ["bash"]
