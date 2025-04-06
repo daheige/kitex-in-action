@@ -14,7 +14,7 @@ COPY . .
 RUN go mod download && go mod verify
 
 # 编译构建应用程序
-RUN cd /app/cmd/rpc && go build -ldflags="-s -w" -o kitex-rpc
+RUN cd /app/cmd/rpc && go build -ldflags="-s -w -extldflags '-static'" -o kitex-rpc
 
 # 将上面构建好的二进制文件复制到容器中运行
 # bullseye-slim是固定版本的Debian 11的精简镜像
