@@ -36,7 +36,7 @@ RUN echo "export LC_ALL=${LANG}"  >>  /etc/profile  \
 WORKDIR /app
 
 # 服务端口
-EXPOSE 8890
+EXPOSE 8890 9093
 
 # 将构建阶段的二进制文件复制到工作目录中
 COPY --from=builder /app/hello-rpc /app/hello-rpc
