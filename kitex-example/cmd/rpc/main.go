@@ -6,6 +6,7 @@ import (
 	"net"
 
 	kServer "github.com/cloudwego/kitex/server"
+	prometheus "github.com/kitex-contrib/monitor-prometheus"
 	"go.uber.org/zap"
 
 	"kitex-example/internal/infras/logger"
@@ -24,6 +25,8 @@ func main() {
 	svr := pb.NewServer(
 		new(rpc.GreeterImpl),
 		kServer.WithServiceAddr(addr),
+		// prometheus接入
+		kServer.WithTracer(prometheus.NewServerTracer(":9093", "/metrics")),
 	)
 	err := svr.Run()
 	if err != nil {

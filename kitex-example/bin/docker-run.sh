@@ -11,4 +11,4 @@ if [ ${#container} -gt 0 ]; then
     docker rm -f $container_name
 fi
 
-docker run --name=$container_name -p 8890:8890 -itd $image_name:$version
+docker run --name=$container_name -p 8890:8890 -p 9093:9093 -itd $image_name:$version

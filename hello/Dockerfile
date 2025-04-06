@@ -1,42 +1,42 @@
-FROM golang:1.22.12-bullseye AS builder
-LABEL authors="daheige"
+FROM golang:1.22.12-alpine AS builder
+LABEL author="daheige"
 
 # 设置环境变量
 ENV LANG="zh_CN.UTF-8"
 
-# 设置环境变量
-ENV CGO_ENABLED=0 GOPROXY=https://goproxy.cn,direct
+# 配置环境变量（禁用 CGO、启用模块、设置代理）
+ENV CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GOPROXY=https://goproxy.cn,direct
 
 WORKDIR /app
 
 COPY . .
 
-RUN go mod download && go mod verify
+RUN go mod download
 
 # 编译构建应用程序
-RUN cd /app && go build -ldflags="-s -w" -o hello-rpc main.go
+RUN cd /app && go build -ldflags="-w -s -extldflags '-static'" -o hello-rpc
 
 # 将上面构建好的二进制文件复制到容器中运行
-# bullseye-slim是固定版本的Debian 11的精简镜像
-# debian 11.x (bullseye)
-FROM debian:bullseye-slim
+#FROM alpine:latest
+FROM alpine:3.21
 
 # 设置时区和lang
 ENV TZ=Asia/Shanghai LANG="zh_CN.UTF-8"
+
+# 安装相关依赖
+# 解决http x509证书问题，需要安装证书
+# libc6-compat 安装DNS解析相关依赖（可选）
+RUN echo "export LC_ALL=${LANG}"  >>  /etc/profile  \
+    && apk update && apk upgrade  \
+    && apk --no-cache add net-tools tzdata ca-certificates bash vim bash-completion curl  \
+    && cp /usr/share/zoneinfo/${TZ} /etc/localtime  \
+    && echo $TZ > /etc/timezone && apk del tzdata  \
+    && rm -rf /var/cache/apk/* /tmp/* /var/tmp/* $HOME/.cache
 
 WORKDIR /app
 
 # 服务端口
 EXPOSE 8890
-
-# 设置deb镜像源，这里我使用aliyun的镜像
-RUN echo "deb http://mirrors.aliyun.com/debian bullseye main" > /etc/apt/sources.list &&  \
-    echo "deb http://mirrors.aliyun.com/debian-security bullseye-security main" >> /etc/apt/sources.list &&  \
-    echo "deb http://mirrors.aliyun.com/debian bullseye-updates main" >> /etc/apt/sources.list &&  \
-    echo "deb https://mirrors.aliyun.com/debian/ bullseye-backports main" >> /etc/apt/sources.list &&  \
-    apt-get update && apt-get install -y ca-certificates vim bash curl net-tools netbase wget \
-    apt-transport-https && update-ca-certificates && apt-get clean &&  \
-    rm -rf /var/lib/apt/lists && apt-get autoremove -y && apt-get autoclean -y
 
 # 将构建阶段的二进制文件复制到工作目录中
 COPY --from=builder /app/hello-rpc /app/hello-rpc
