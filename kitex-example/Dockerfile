@@ -31,7 +31,7 @@ RUN echo "export LC_ALL=${LANG}"  >>  /etc/profile  \
     && apk --no-cache add net-tools tzdata ca-certificates bash vim bash-completion curl  \
     && cp /usr/share/zoneinfo/${TZ} /etc/localtime  \
     && echo $TZ > /etc/timezone && apk del tzdata  \
-    && rm -rf /var/cache/apk/* /tmp/* /var/tmp/* $HOME/.cache
+    && rm -rf /var/cache/apk/* /tmp/* /var/tmp/* /root/.cache
 
 WORKDIR /app
 

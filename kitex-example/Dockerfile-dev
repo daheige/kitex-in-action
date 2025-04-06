@@ -18,7 +18,7 @@ RUN echo "export LC_ALL=${LANG}"  >>  /etc/profile  \
     tzdata ca-certificates bash vim bash-completion curl nodejs npm wget \
     && cp /usr/share/zoneinfo/${TZ} /etc/localtime  \
     && echo $TZ > /etc/timezone && apk del tzdata  \
-    && rm -rf /var/cache/apk/* /tmp/* /var/tmp/* $HOME/.cache  \
+    && rm -rf /var/cache/apk/* /tmp/* /var/tmp/* /root/.cache  \
     && go install github.com/cloudwego/kitex/tool/cmd/kitex@latest  \
     && go install github.com/cloudwego/protoc-gen-validator@latest  \
     && go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
