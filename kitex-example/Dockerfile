@@ -1,4 +1,4 @@
-FROM golang:1.22.12-alpine AS builder
+FROM golang:1.23.8-alpine AS builder
 LABEL author="daheige"
 
 # 设置环境变量
