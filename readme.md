@@ -12,6 +12,7 @@ go env -w GOPROXY=https://goproxy.cn,direct
 ```
 3. 安装kitex工具
 ```shell
+# go install github.com/cloudwego/kitex/tool/cmd/kitex@v0.12.3
 go install github.com/cloudwego/kitex/tool/cmd/kitex@latest
 ```
 3. 安装protoc工具

@@ -8,8 +8,11 @@ import (
 	"github.com/cloudwego/prutal"
 )
 
+// @validator=HelloRequest
 type HelloRequest struct {
-	Msg string `protobuf:"bytes,1,opt,name=msg" json:"msg,omitempty"`
+	// 主要用于validator参数校验
+	// @inject_tag: json:"msg" validate:"required,min=1"
+	Msg string `protobuf:"bytes,1,opt,name=msg" json:"msg" validate:"required,min=1"`
 }
 
 func (x *HelloRequest) Reset() { *x = HelloRequest{} }

@@ -10,7 +10,10 @@ service Greeter {
   rpc Hello (HelloRequest) returns (HelloReply) {}
 }
 
+// @validator=HelloRequest
 message HelloRequest {
+  // 主要用于validator参数校验
+  // @inject_tag: json:"msg" validate:"required,min=1"
   string msg = 1;
 }
 

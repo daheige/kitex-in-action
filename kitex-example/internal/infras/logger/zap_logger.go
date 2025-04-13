@@ -206,11 +206,11 @@ func (z *zapLogWriter) parseFields(ctx context.Context, args []interface{}) []za
 	}
 
 	fields = append(fields, zap.String(CurHostname.String(), z.hostname))
-	// request_id 可能是一个数字，但建议请求ip使用uuid字符串
+	// request_id 可能是一个数字，但建议请求id使用uuid字符串
 	if reqID := ctx.Value(XRequestID); reqID != nil {
 		fields = append(fields, zap.Any(XRequestID.String(), reqID))
 	} else {
-		fields = append(fields, zap.String(XRequestID.String(), RndUUIDMd5()))
+		fields = append(fields, zap.String(XRequestID.String(), Uuid()))
 	}
 
 	// request ip 地址存在就记录

@@ -66,5 +66,7 @@ go run client/client.go
 运行效果如下图所示<br/>：
 ![client-run](client-run.png)
 
+# validator使用
+通过`tools/validator_gen`插件实现
 # 更多kitex用法
 参考[hello](../hello)

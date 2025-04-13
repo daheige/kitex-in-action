@@ -25,6 +25,9 @@ else
     sed -i "s/${module_name}\/kitex_gen\/pb/${module_name}\/internal\/pb/g" `grep ${module_name}/kitex_gen/pb -rl ${pb_dir}`
 fi
 
+# 生成validator参数校验的代码
+sh $root_dir/bin/gen-validator.sh
+
 # 获取对应的go package
 go mod tidy
 
