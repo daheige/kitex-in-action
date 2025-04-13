@@ -134,7 +134,7 @@ func getAllReqValidatorNames() []string {
 			// log.Println("s = ", s)
 
 			if len(s) == 2 {
-				arr = append(arr, s[1])
+				arr = append(arr, strings.TrimSpace(s[1]))
 			}
 		}
 	}
