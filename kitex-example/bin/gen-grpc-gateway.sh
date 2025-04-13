@@ -1,13 +1,6 @@
 #!/usr/bin/env bash
 root_dir=$(cd "$(dirname "$0")"; cd ..; pwd)
 protoExec=$(which "protoc")
-
-proto_dir=$root_dir/idl
-
-# 创建pb文件目录
-pb_dir=${root_dir}/internal/pb/gateway
-mkdir -p ${pb_dir}
-
 if [ -z $protoExec ]; then
     echo 'Please install protoc'
     echo "Please look kitex-in-action/readme.md to install protoc"
@@ -15,11 +8,18 @@ if [ -z $protoExec ]; then
     exit 0
 fi
 
+proto_dir=$root_dir/idl
+# 创建pb文件目录
+pb_dir=${root_dir}/internal/pb/gateway
+mkdir -p ${pb_dir}
+
+# 生成grpc pb代码
 $protoExec -I $proto_dir \
     --go_out $pb_dir --go_opt paths=source_relative \
     --go-grpc_out $pb_dir --go-grpc_opt paths=source_relative \
     $proto_dir/*.proto
 
+# 生成grpc http gateway相关代码
 $protoExec -I $proto_dir --grpc-gateway_out $pb_dir \
     --grpc-gateway_opt logtostderr=true \
     --grpc-gateway_opt paths=source_relative \
