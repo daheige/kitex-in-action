@@ -1,5 +1,5 @@
 # kitex实战
-具体实现步骤如下：
+kitex工具具体实现步骤如下：
 1. 环境准备参考[kitex-in-action/readme.md](../readme.md)
 2. 新建kitex-example目录和kitex-example/bin目录
 3. 在kitex-example/bin目录中，添加如下文件
@@ -66,7 +66,7 @@ go run client/client.go
 运行效果如下图所示<br/>：
 ![client-run](client-run.png)
 
-# validator使用
+# 参数校验validator使用
 通过`tools/validator_gen`插件和validator库实现。
 - https://github.com/go-playground/validator
 - https://pkg.go.dev/github.com/go-playground/validator/v10
@@ -81,5 +81,5 @@ sh bin/gen-grpc-gateway.sh
 ```
 具体代码接入，见入口文件`cmd/gateway/main.go`
 
-# 完整的mysql和redis接入
+# 完整的mysql和redis接入和使用
 参考:https://github.com/daheige/athena 项目

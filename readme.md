@@ -1,5 +1,14 @@
 # kitex-in-action
-    kitex实战项目开发
+为了更好地帮助小伙伴们使用kitex，减少接入成本（最终的目标：让开发人员能更好地聚焦业务逻辑开发）。<br/>
+因此，我将kitex使用过程中的各个方面实战进行了开源，主要包含以下内容：
+- kitex工具使用
+- 如何快速编写微服务
+- 如何编写微服务server端中间件
+- 如何接入日志服务
+- 如何接入服务监控和metrics数据指标上报以及pprof接入
+- 如何快速接入grpc http gateway
+- 如何编写客户端代码调用微服务接口
+
 # kitex参考文档
 https://www.cloudwego.io/zh/docs/kitex/
 
