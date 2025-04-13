@@ -8,7 +8,9 @@ import (
 	"github.com/cloudwego/kitex/pkg/utils"
 )
 
-// The validate interface prior to protoc-gen-validate v0.6.0.
+// ValidatorLegacy validate interface
+// 设计灵感来源于grpc-ecosystem/go-grpc-middleware
+// 代码位置:https://github.com/grpc-ecosystem/go-grpc-middleware/blob/main/interceptors/validator/validator.go#L26
 type ValidatorLegacy interface {
 	Validate() error
 }
