@@ -23,7 +23,7 @@ func main() {
 	}
 
 	// 调用rpc方法
-	req := &pb.HelloRequest{Msg: ""}
+	req := &pb.HelloRequest{Msg: "hello world"}
 	resp, e := c.Hello(context.Background(), req)
 	if e != nil {
 		log.Fatal("rpc error:", e)
