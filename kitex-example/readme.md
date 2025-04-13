@@ -67,6 +67,9 @@ go run client/client.go
 ![client-run](client-run.png)
 
 # validator使用
-通过`tools/validator_gen`插件实现
+通过`tools/validator_gen`插件和validator库实现。
+- https://github.com/go-playground/validator
+- https://pkg.go.dev/github.com/go-playground/validator/v10
+
 # 更多kitex用法
 参考[hello](../hello)
