@@ -14,3 +14,17 @@ gen-layout:
 gen-pb:
 	kitex -module ${module_name} -I idl idl/${proto_name}
 	sh bin/gen-pb.sh ${module_name}
+
+# 生成grpc http gateway代码
+gen-gateway:
+	sh bin/gen-grpc-gateway.sh
+
+# 构建rpc镜像
+rpc-build:
+	sh bin/docker-build.sh
+
+# 容器运行rpc服务
+rpc-run:
+	sh bin/docker-run.sh
+
+.PHONY: gen-layout gen-pb gen-gateway

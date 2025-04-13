@@ -5,6 +5,7 @@ import (
 	"net"
 	"time"
 
+	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	kServer "github.com/cloudwego/kitex/server"
 	prometheus "github.com/kitex-contrib/monitor-prometheus"
 
@@ -38,6 +39,7 @@ func main() {
 		kServer.WithExitWaitTime(5*time.Second), // graceful shutdown timeout
 		// 在连接上读写数据所能忍受的最大等待时间，主要为防止异常连接卡住协程
 		kServer.WithReadWriteTimeout(10*time.Second), // read and write timeout
+		kServer.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "greeter"}),
 	)
 	err := svr.Run()
 	if err != nil {

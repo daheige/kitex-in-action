@@ -30,15 +30,20 @@ export PATH=~/.local/bin:$PATH # Add this to your `~/.bashrc`.
 protoc --version
 libprotoc 3.15.8
 ```
-4. 安装grpc相关的go工具链
+
+4. 安装kitex和grpc相关的go工具链
 参考链接： https://www.cloudwego.io/zh/docs/kitex/tutorials/code-gen/code_generation/
 ```shell
 go install github.com/cloudwego/kitex/tool/cmd/kitex@latest
 # https://github.com/cloudwego/protoc-gen-validator
 go install github.com/cloudwego/protoc-gen-validator@latest
 
+# go gRPC tools
+go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
+go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
 # Reference: https://grpc.io/docs/languages/go/quickstart/
 go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 ```
 
 # kitex实战demo

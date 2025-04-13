@@ -73,3 +73,13 @@ go run client/client.go
 
 # 更多kitex用法
 参考[hello](../hello)
+
+# kitex grpc http gateway接入
+执行如下命令生成grpc http gateway相关代码
+```shell
+sh bin/gen-grpc-gateway.sh
+```
+具体代码接入，见入口文件`cmd/gateway/main.go`
+
+# 完整的mysql和redis接入
+参考:https://github.com/daheige/athena 项目

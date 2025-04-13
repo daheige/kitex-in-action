@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"math/rand"
+	"runtime/debug"
 	"strconv"
 	"strings"
 	"time"
@@ -61,4 +62,10 @@ func Md5(str string) string {
 	h := md5.New()
 	h.Write([]byte(str))
 	return hex.EncodeToString(h.Sum(nil))
+}
+
+// CatchStack 捕获指定stack信息,一般在处理panic/recover中处理
+// 返回完整的堆栈信息和函数调用信息
+func CatchStack() []byte {
+	return debug.Stack()
 }
